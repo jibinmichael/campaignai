@@ -17,13 +17,6 @@ const IMG_WORKFLOW =
   "https://www.figma.com/api/mcp/asset/8f545dc4-5b3a-4d8e-b089-a9f673c52960"
 const IMG_CLAP =
   "https://www.figma.com/api/mcp/asset/1176ea68-d019-4a19-8c31-da487a67aa60"
-/** Figma 75:185 — platform marks (~7d TTL). */
-const IMG_ADS_META =
-  "https://www.figma.com/api/mcp/asset/479c62fb-bb5d-4e6c-9cee-634d6001da85"
-const IMG_ADS_TIKTOK =
-  "https://www.figma.com/api/mcp/asset/5fe73961-ff5b-4d44-816a-b69fdb138873"
-const IMG_ADS_GOOGLE =
-  "https://www.figma.com/api/mcp/asset/acff34b3-e646-485c-b8ef-1b8711c4e069"
 
 function InfoIcon({
   className,
@@ -221,16 +214,21 @@ function FilmstripTimeTravel({
   const rangeEndLabel = monthYearFull(snapshots[STRIP_LAST]!.month)
 
   return (
-    <div className="w-full shrink-0 border-t border-[#F0F0EE] px-4 pt-3 pb-0 [border-top-width:0.5px] md:px-6">
+    <div
+      className="flex w-full shrink-0 flex-col gap-[10px] overflow-hidden rounded-br-[12px] rounded-bl-[12px] border border-solid border-[#e7e9e8] bg-white pt-[18px] pr-7 pb-4 pl-6"
+      data-node-id="117:2622"
+    >
       <div
-        className="mb-[8px] flex flex-col justify-center leading-none text-xs font-normal whitespace-nowrap text-[#505451]"
-        data-node-id="103:1902"
+        className="flex shrink-0 flex-col justify-center leading-none text-xs font-medium whitespace-nowrap text-[#505451]"
+        data-node-id="117:2623"
       >
-        <p className="leading-4">Rewind and see the progress</p>
+        <p className="leading-4">Rewind & see the progress</p>
       </div>
-      <div className="relative w-full select-none">
-        <div className="mb-0.5 flex w-full items-center gap-2 sm:gap-3">
-          <span className="max-w-[5.5rem] shrink-0 text-right text-[9px] leading-tight text-[#999] sm:max-w-none sm:text-[10px]">
+      <div
+        className="relative flex w-full select-none items-center gap-2 py-1"
+        data-node-id="117:2624"
+      >
+          <span className="max-w-[5.5rem] shrink-0 text-right text-xs leading-4 text-[#848a86] sm:max-w-none">
             {rangeStartLabel}
           </span>
           <div className="relative min-w-0 flex-1">
@@ -373,10 +371,9 @@ function FilmstripTimeTravel({
               </span>
             </button>
           </div>
-          <span className="max-w-[5.5rem] shrink-0 text-left text-[9px] leading-tight text-[#999] sm:max-w-none sm:text-[10px]">
+          <span className="max-w-[5.5rem] shrink-0 text-left text-xs leading-4 text-[#353735] sm:max-w-none">
             {rangeEndLabel}
           </span>
-        </div>
       </div>
     </div>
   )
@@ -452,78 +449,42 @@ export function AdsLifetimeSummaryCard() {
           className="flex w-full shrink-0 flex-col items-start overflow-hidden"
           data-node-id="75:185"
         >
+          {/* Figma PlYsn2j4gbkftQibcUwJNf / node 117:2558 */}
           <div
-            className="relative flex shrink-0 flex-col items-start overflow-hidden bg-white"
-            data-node-id="75:187"
+            className="flex w-full shrink-0 flex-col items-start pb-4"
+            data-node-id="117:2558"
           >
             <div
-              className="relative flex shrink-0 items-start overflow-hidden bg-white"
-              data-node-id="75:188"
+              className="flex w-full max-w-[388px] flex-col gap-1.5 overflow-hidden bg-white"
+              data-node-id="117:2559"
             >
               <div
-                className="relative shrink-0 whitespace-nowrap text-2xl font-semibold leading-[0] text-[#1b1d1c]"
-                data-node-id="75:189"
+                className="flex shrink-0 flex-col justify-center leading-none"
+                data-node-id="128:2924"
               >
-                <p className="leading-[26px]" data-node-id="75:186">
-                  <span className="text-[#848a86]">389 days</span>
-                  <span> since you&apos;ve connected your</span>
+                <p className="font-['JetBrains_Mono',monospace] text-[14px] font-medium leading-5 text-[#0c70ea]">
+                  389 days
                 </p>
               </div>
-            </div>
-            <div
-              className="relative flex shrink-0 items-center gap-1.5 overflow-hidden bg-white pt-2.5 pb-1"
-              data-node-id="75:190"
-            >
               <div
-                className="relative box-border flex size-7 shrink-0 flex-col items-center justify-center overflow-hidden rounded-[32px] border border-solid border-[#e7e9e8]"
-                data-node-id="78:1027"
-                aria-hidden
+                className="flex w-full flex-col bg-white"
+                data-node-id="117:2560"
               >
-                <div className="relative size-[14px] shrink-0" data-node-id="103:1929">
-                  <img
-                    alt=""
-                    className="absolute inset-0 block size-full max-w-none"
-                    src={IMG_ADS_META}
-                  />
+                {/* Figma metadata: node 117:2561 — 298×78 */}
+                <div
+                  className="flex w-[298px] shrink-0 flex-col justify-center leading-[0] text-[#1b1d1c]"
+                  data-node-id="117:2561"
+                >
+                  <p className="text-2xl font-semibold leading-[26px]">
+                    Since you&apos;ve connected your Ad accounts with Wati
+                  </p>
                 </div>
-              </div>
-              <div
-                className="relative box-border flex size-7 shrink-0 flex-col items-center justify-center overflow-hidden rounded-[32px] border border-solid border-[#e7e9e8]"
-                data-node-id="103:1910"
-                aria-hidden
-              >
-                <div className="relative size-[14px] shrink-0" data-node-id="103:1920">
-                  <img
-                    alt=""
-                    className="absolute inset-0 block size-full max-w-none"
-                    src={IMG_ADS_TIKTOK}
-                  />
-                </div>
-              </div>
-              <div
-                className="relative box-border flex size-7 shrink-0 flex-col items-center justify-center overflow-hidden rounded-[32px] border border-solid border-[#e7e9e8]"
-                data-node-id="103:1915"
-                aria-hidden
-              >
-                <div className="relative size-[14px] shrink-0" data-node-id="103:1916">
-                  <img
-                    alt=""
-                    className="absolute inset-0 block size-full max-w-none"
-                    src={IMG_ADS_GOOGLE}
-                  />
-                </div>
-              </div>
-              <div
-                className="relative flex w-[279px] shrink-0 flex-col justify-center text-2xl font-semibold text-[#848a86]"
-                data-node-id="75:201"
-              >
-                <p className="leading-[26px]">ad accounts with Wati</p>
               </div>
             </div>
-            <p className="mb-3 mt-[18px] text-[13px] font-semibold leading-5 text-[#848a86]">
-              Together we&apos;ve
-            </p>
           </div>
+          <p className="mb-3 mt-[18px] text-[13px] font-semibold leading-5 text-[#848a86]">
+            Together we&apos;ve
+          </p>
         </div>
 
         <div
@@ -531,12 +492,12 @@ export function AdsLifetimeSummaryCard() {
           data-node-id="79:1049"
         >
           <div
-            className="flex w-full min-w-0 flex-1 items-stretch gap-3 overflow-hidden rounded-lg border border-[#e7e9e8] bg-white"
+            className="flex w-full min-w-0 flex-1 items-stretch gap-3 overflow-hidden rounded-t-[12px] border border-b-0 border-[#e7e9e8] bg-white"
             data-node-id="81:1141"
           >
             {/* 1 — Revenue from conversations */}
             <div
-              className="flex min-h-0 min-w-0 flex-1 flex-col justify-center gap-1.5 border-r border-[#e7e9e8] px-6 py-2"
+              className="flex min-h-0 min-w-0 flex-1 flex-col justify-center gap-1.5 border-r border-[#e7e9e8] px-6 py-4"
               data-node-id="81:1149"
             >
               <div
@@ -625,7 +586,7 @@ export function AdsLifetimeSummaryCard() {
 
             {/* 2 — Leads qualified */}
             <div
-              className="flex min-h-0 min-w-0 flex-1 flex-col justify-center gap-1.5 px-6 py-2"
+              className="flex min-h-0 min-w-0 flex-1 flex-col justify-center gap-1.5 px-6 py-4"
               data-node-id="81:1142"
             >
               <div
@@ -691,7 +652,7 @@ export function AdsLifetimeSummaryCard() {
 
             {/* 3 — Qualified purchases */}
             <div
-              className="flex min-h-0 min-w-0 flex-1 flex-col justify-center gap-1.5 border-l border-[#e7e9e8] px-6 py-2"
+              className="flex min-h-0 min-w-0 flex-1 flex-col justify-center gap-1.5 border-l border-[#e7e9e8] px-6 py-4"
               data-node-id="81:1163"
             >
               <div
@@ -754,7 +715,7 @@ export function AdsLifetimeSummaryCard() {
 
             {/* 4 — Return on spend */}
             <div
-              className="flex min-h-0 min-w-0 flex-1 flex-col justify-center gap-1.5 border-l border-[#e7e9e8] px-6 py-2"
+              className="flex min-h-0 min-w-0 flex-1 flex-col justify-center gap-1.5 border-l border-[#e7e9e8] px-6 py-4"
               data-node-id="81:1156"
             >
               <div
