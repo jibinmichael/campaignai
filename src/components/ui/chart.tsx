@@ -130,6 +130,10 @@ function ChartTooltipContent({
   color,
   nameKey,
   labelKey,
+  valueAlignment = "spread",
+  payloadListClassName,
+  itemClassName,
+  textAlign: textAlignProp = "left",
 }: React.ComponentProps<typeof RechartsPrimitive.Tooltip> &
   React.ComponentProps<"div"> & {
     hideLabel?: boolean
@@ -137,6 +141,14 @@ function ChartTooltipContent({
     indicator?: "line" | "dot" | "dashed"
     nameKey?: string
     labelKey?: string
+    /** `spread`: label left, value right. `inline`: both left with gap (easier to scan). */
+    valueAlignment?: "spread" | "inline"
+    /** Merged onto the list wrapper around payload rows (e.g. `gap-2.5`). */
+    payloadListClassName?: string
+    /** Merged onto each payload row (e.g. `gap-2.5` between indicator and text). */
+    itemClassName?: string
+    /** Tooltip content alignment; `right` aligns label and rows to the trailing edge. */
+    textAlign?: "left" | "right"
   } & Omit<
     RechartsPrimitive.DefaultTooltipContentProps<
       TooltipValueType,
@@ -145,6 +157,8 @@ function ChartTooltipContent({
     "accessibilityLayer"
   >) {
   const { config } = useChart()
+  const textAlign = textAlignProp
+  const isRtl = textAlign === "right"
 
   const tooltipLabel = React.useMemo(() => {
     if (hideLabel || !payload?.length) {
@@ -161,7 +175,13 @@ function ChartTooltipContent({
 
     if (labelFormatter) {
       return (
-        <div className={cn("font-medium", labelClassName)}>
+        <div
+          className={cn(
+            "font-medium",
+            isRtl && "w-full text-right",
+            labelClassName
+          )}
+        >
           {labelFormatter(value, payload)}
         </div>
       )
@@ -171,7 +191,13 @@ function ChartTooltipContent({
       return null
     }
 
-    return <div className={cn("font-medium", labelClassName)}>{value}</div>
+    return (
+      <div
+        className={cn("font-medium", isRtl && "w-full text-right", labelClassName)}
+      >
+        {value}
+      </div>
+    )
   }, [
     label,
     labelFormatter,
@@ -180,6 +206,7 @@ function ChartTooltipContent({
     labelClassName,
     config,
     labelKey,
+    isRtl,
   ])
 
   if (!active || !payload?.length) {
@@ -191,12 +218,13 @@ function ChartTooltipContent({
   return (
     <div
       className={cn(
-        "grid min-w-32 items-start gap-1.5 rounded-lg border border-border/50 bg-background px-2.5 py-1.5 text-xs shadow-xl",
+        "grid min-w-32 gap-1.5 rounded-lg border border-border/50 bg-background px-2.5 py-1.5 text-xs shadow-xl",
+        isRtl ? "items-end text-right" : "items-start text-left",
         className
       )}
     >
       {!nestLabel ? tooltipLabel : null}
-      <div className="grid gap-1.5">
+      <div className={cn("grid gap-1.5", payloadListClassName)}>
         {payload
           .filter((item) => item.type !== "none")
           .map((item, index) => {
@@ -208,58 +236,153 @@ function ChartTooltipContent({
               <div
                 key={index}
                 className={cn(
-                  "flex w-full flex-wrap items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:text-muted-foreground",
-                  indicator === "dot" && "items-center"
+                  "flex w-full flex-wrap gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:text-muted-foreground",
+                  isRtl ? "items-center justify-end" : "items-stretch",
+                  indicator === "dot" && "items-center",
+                  itemClassName
                 )}
               >
                 {formatter && item?.value !== undefined && item.name ? (
                   formatter(item.value, item.name, item, index, item.payload)
                 ) : (
                   <>
-                    {itemConfig?.icon ? (
-                      <itemConfig.icon />
-                    ) : (
-                      !hideIndicator && (
+                    {isRtl ? (
+                      <div className="flex w-full justify-end">
                         <div
                           className={cn(
-                            "shrink-0 rounded-none border-(--color-border) bg-(--color-bg)",
-                            {
-                              "h-2.5 w-2.5": indicator === "dot",
-                              "w-1": indicator === "line",
-                              "w-0 border-[1.5px] border-dashed bg-transparent":
-                                indicator === "dashed",
-                              "my-0.5": nestLabel && indicator === "dashed",
-                            }
+                            "flex min-w-0 max-w-full items-center gap-2 leading-snug",
+                            indicator === "dot" && "items-center"
                           )}
-                          style={
-                            {
-                              "--color-bg": indicatorColor,
-                              "--color-border": indicatorColor,
-                            } as React.CSSProperties
-                          }
-                        />
-                      )
-                    )}
-                    <div
-                      className={cn(
-                        "flex flex-1 justify-between leading-none",
-                        nestLabel ? "items-end" : "items-center"
-                      )}
-                    >
-                      <div className="grid gap-1.5">
-                        {nestLabel ? tooltipLabel : null}
-                        <span className="text-muted-foreground">
-                          {itemConfig?.label ?? item.name}
-                        </span>
+                        >
+                          {itemConfig?.icon ? (
+                            <itemConfig.icon />
+                          ) : (
+                            !hideIndicator && (
+                              <div
+                                className={cn(
+                                  "shrink-0 rounded-none border-(--color-border) bg-(--color-bg)",
+                                  {
+                                    "h-2.5 w-2.5": indicator === "dot",
+                                    "w-1": indicator === "line",
+                                    "w-0 border-[1.5px] border-dashed bg-transparent":
+                                      indicator === "dashed",
+                                    "my-0.5": nestLabel && indicator === "dashed",
+                                  }
+                                )}
+                                style={
+                                  {
+                                    "--color-bg": indicatorColor,
+                                    "--color-border": indicatorColor,
+                                  } as React.CSSProperties
+                                }
+                              />
+                            )
+                          )}
+                          <div
+                            className={cn(
+                              "flex min-w-0 leading-snug",
+                              valueAlignment === "inline"
+                                ? nestLabel
+                                  ? "flex-col items-end gap-1.5"
+                                  : "flex-row flex-wrap items-baseline justify-end gap-x-3 gap-y-1"
+                                : nestLabel
+                                  ? "flex-col items-end gap-1.5"
+                                  : "items-center justify-end gap-3"
+                            )}
+                          >
+                            <div
+                              className={cn(
+                                "grid gap-1.5",
+                                valueAlignment === "inline" && !nestLabel && "gap-0",
+                                "text-right"
+                              )}
+                            >
+                              {nestLabel ? tooltipLabel : null}
+                              <span className="text-right text-muted-foreground">
+                                {itemConfig?.label ?? item.name}
+                              </span>
+                            </div>
+                            {item.value != null && (
+                              <span
+                                className={cn(
+                                  "text-right font-mono font-medium text-foreground tabular-nums",
+                                  valueAlignment === "inline" && "shrink-0"
+                                )}
+                              >
+                                {typeof item.value === "number"
+                                  ? item.value.toLocaleString()
+                                  : String(item.value)}
+                              </span>
+                            )}
+                          </div>
+                        </div>
                       </div>
-                      {item.value != null && (
-                        <span className="font-mono font-medium text-foreground tabular-nums">
-                          {typeof item.value === "number"
-                            ? item.value.toLocaleString()
-                            : String(item.value)}
-                        </span>
-                      )}
-                    </div>
+                    ) : (
+                      <>
+                        {itemConfig?.icon ? (
+                          <itemConfig.icon />
+                        ) : (
+                          !hideIndicator && (
+                            <div
+                              className={cn(
+                                "shrink-0 rounded-none border-(--color-border) bg-(--color-bg)",
+                                {
+                                  "h-2.5 w-2.5": indicator === "dot",
+                                  "w-1": indicator === "line",
+                                  "w-0 border-[1.5px] border-dashed bg-transparent":
+                                    indicator === "dashed",
+                                  "my-0.5": nestLabel && indicator === "dashed",
+                                }
+                              )}
+                              style={
+                                {
+                                  "--color-bg": indicatorColor,
+                                  "--color-border": indicatorColor,
+                                } as React.CSSProperties
+                              }
+                            />
+                          )
+                        )}
+                        <div
+                          className={cn(
+                            "flex min-w-0 flex-1 leading-snug",
+                            valueAlignment === "inline"
+                              ? nestLabel
+                                ? "flex-col items-start gap-1.5"
+                                : "flex-row flex-wrap items-baseline justify-start gap-x-3 gap-y-1"
+                              : nestLabel
+                                ? "items-end justify-between"
+                                : "items-center justify-between"
+                          )}
+                        >
+                          <div
+                            className={cn(
+                              "grid gap-1.5",
+                              valueAlignment === "inline" && !nestLabel && "gap-0",
+                              valueAlignment === "spread" && "min-w-0 flex-1"
+                            )}
+                          >
+                            {nestLabel ? tooltipLabel : null}
+                            <span className="text-left text-muted-foreground">
+                              {itemConfig?.label ?? item.name}
+                            </span>
+                          </div>
+                          {item.value != null && (
+                            <span
+                              className={cn(
+                                "font-mono font-medium text-foreground tabular-nums",
+                                valueAlignment === "inline" && "shrink-0",
+                                valueAlignment === "spread" && "shrink-0 text-right"
+                              )}
+                            >
+                              {typeof item.value === "number"
+                                ? item.value.toLocaleString()
+                                : String(item.value)}
+                            </span>
+                          )}
+                        </div>
+                      </>
+                    )}
                   </>
                 )}
               </div>

@@ -23,7 +23,7 @@ export function AppShellLayout() {
       }
     >
       <Sidebar collapsible="none" className="app-sidebar-rail">
-        <SidebarContent className="app-sidebar-rail-body" />
+        <SidebarContent className="app-sidebar-rail-body px-3" />
       </Sidebar>
       <SidebarInset
         className={cn("app-main-inset", "flex min-h-svh flex-col")}

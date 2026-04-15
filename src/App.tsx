@@ -5,6 +5,7 @@ import { AppShellLayout } from "@/layouts/app-shell-layout"
 import { BuildSegmentPage } from "@/pages/build-segment-page"
 import { ChooseCampaignTemplatePage } from "@/pages/choose-campaign-template-page"
 import { CreateCampaignPage } from "@/pages/create-campaign-page"
+import { AdsIntelligencePage } from "@/pages/ads-intelligence-page"
 import { DashboardPage } from "@/pages/dashboard-page"
 
 export default function App() {
@@ -12,6 +13,7 @@ export default function App() {
     <Routes>
       <Route element={<AppShellLayout />}>
         <Route path="/" element={<DashboardPage />} />
+        <Route path="/ads-intelligence" element={<AdsIntelligencePage />} />
         <Route path="/campaigns/new" element={<CreateCampaignPage />} />
         <Route path="/segments/new" element={<BuildSegmentPage />} />
         <Route
