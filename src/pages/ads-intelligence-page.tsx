@@ -2,6 +2,7 @@ import * as React from "react"
 import type { DateRange } from "react-day-picker"
 
 import { AdsFunnelChartSection } from "@/components/ads-funnel-chart-section"
+import { AdsFunnelMovesOverTimeSection } from "@/components/ads-funnel-moves-over-time-section"
 import { AdsFunnelMovesToolbar } from "@/components/ads-funnel-moves-toolbar"
 import { AdsLifetimeSummaryCard } from "@/components/ads-lifetime-summary-card"
 import { AdsReportingAdsTableSection } from "@/components/ads-reporting-ads-table-section"
@@ -12,7 +13,7 @@ export function AdsIntelligencePage() {
   const [rangeOpen, setRangeOpen] = React.useState(false)
   const [dateRange, setDateRange] = React.useState<DateRange | undefined>()
 
-  const funnelToolbarProps = {
+  const dateRangeSegmentProps = {
     range,
     onRangeChange: setRange,
     rangeOpen,
@@ -26,12 +27,12 @@ export function AdsIntelligencePage() {
       <div className="app-dashboard-stack">
         <AdsLifetimeSummaryCard />
         <AdsFunnelMovesToolbar
-          {...funnelToolbarProps}
           showFigmaNodeIds={false}
           title="Ad Performance"
         />
-        <AdsReportingFiltersRow />
+        <AdsReportingFiltersRow {...dateRangeSegmentProps} />
         <AdsFunnelChartSection />
+        <AdsFunnelMovesOverTimeSection {...dateRangeSegmentProps} />
         <AdsReportingAdsTableSection className="!mt-2" />
       </div>
     </div>

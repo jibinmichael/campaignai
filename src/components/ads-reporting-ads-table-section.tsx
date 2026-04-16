@@ -578,7 +578,9 @@ function FilterChip({
             type="button"
             className="inline-flex min-w-0 flex-1 items-center gap-1 rounded-full py-0.5 pl-2.5 text-left text-[13px] text-[#1967d2] outline-none hover:bg-[#d2e3fc] focus-visible:ring-2 focus-visible:ring-[#1967d2]/30"
           >
-            <span className="min-w-0 truncate">{summary}</span>
+            <span className="min-w-0 truncate font-['JetBrains_Mono',monospace] tabular-nums">
+              {summary}
+            </span>
             <ChevronDownIcon className="size-3.5 shrink-0 opacity-70" aria-hidden />
           </button>
         </PopoverTrigger>
@@ -744,7 +746,7 @@ export function AdsReportingAdsTableSection({ className }: { className?: string 
     >
       <div className="mb-3" data-node-id="117:2733">
         <h2
-          className="min-w-0 max-w-full text-balance text-[13px] font-semibold leading-snug text-[#1b1d1c]"
+          className="min-w-0 max-w-full text-balance text-[16px] font-semibold leading-snug text-[#1b1d1c]"
           data-node-id="117:2734"
         >
           All ad campaigns across channels
@@ -792,7 +794,7 @@ export function AdsReportingAdsTableSection({ className }: { className?: string 
             <PopoverTrigger asChild>
               <button type="button" className={ADS_TOOLBAR_PILL_BTN}>
                 <CalendarIcon className="size-3 shrink-0" aria-hidden />
-                <span className="min-w-0 truncate">
+                <span className="min-w-0 truncate font-['JetBrains_Mono',monospace] tabular-nums">
                   {formatAdsDateRangeLabel(dateRange)}
                 </span>
               </button>

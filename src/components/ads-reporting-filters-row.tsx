@@ -1,5 +1,9 @@
 import * as React from "react"
 
+import {
+  AdsDateRangeSegmentTabs,
+  type AdsDateRangeSegmentTabsProps,
+} from "@/components/ads-date-range-segment-tabs"
 import { cn } from "@/lib/utils"
 import {
   DropdownMenu,
@@ -35,54 +39,75 @@ function MenuChevron({
   )
 }
 
+type AdsReportingFiltersRowProps = {
+  className?: string
+} & AdsDateRangeSegmentTabsProps
+
 /** Figma PlYsn2j4gbkftQibcUwJNf / node 88:1468 */
-export function AdsReportingFiltersRow({ className }: { className?: string }) {
+export function AdsReportingFiltersRow({
+  className,
+  ...dateRangeTabs
+}: AdsReportingFiltersRowProps) {
+  const [channelScope, setChannelScope] = React.useState("all")
   const [accountScope, setAccountScope] = React.useState("all")
 
   return (
     <div
-      className={cn("flex w-full items-center gap-3 py-2", className)}
+      className={cn(
+        "flex w-full flex-wrap items-center gap-3 py-2",
+        className
+      )}
       data-node-id="88:1468"
     >
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <button
-            type="button"
-            className={outlineMenuButtonClass}
-            data-node-id="88:1534"
-          >
-            <span data-node-id="I88:1534;8:196">
-              {accountScope === "all" ? "All Accounts" : "Selected account"}
-            </span>
-            <MenuChevron data-node-id="I88:1534;1495:14442" />
-          </button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="start" className="min-w-[10rem]">
-          <DropdownMenuItem
-            onSelect={() => setAccountScope("all")}
-            className={accountScope === "all" ? "font-medium" : undefined}
-          >
-            All Accounts
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <AdsDateRangeSegmentTabs {...dateRangeTabs} />
 
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <button
-            type="button"
-            className={outlineMenuButtonClass}
-            data-node-id="88:1528"
-          >
-            <span data-node-id="I88:1528;8:196">Filter by</span>
-            <MenuChevron data-node-id="I88:1528;1495:14442" />
-          </button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="start" className="min-w-[10rem]">
-          <DropdownMenuItem>All activity</DropdownMenuItem>
-          <DropdownMenuItem>Qualified leads only</DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <div className="flex flex-wrap items-center gap-3">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button
+              type="button"
+              className={outlineMenuButtonClass}
+              data-node-id="88:1528"
+            >
+              <span data-node-id="I88:1528;8:196">
+                {channelScope === "all" ? "All channels" : "Selected channel"}
+              </span>
+              <MenuChevron data-node-id="I88:1528;1495:14442" />
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start" className="min-w-[10rem]">
+            <DropdownMenuItem
+              onSelect={() => setChannelScope("all")}
+              className={channelScope === "all" ? "font-medium" : undefined}
+            >
+              All channels
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button
+              type="button"
+              className={outlineMenuButtonClass}
+              data-node-id="88:1534"
+            >
+              <span data-node-id="I88:1534;8:196">
+                {accountScope === "all" ? "All accounts" : "Selected account"}
+              </span>
+              <MenuChevron data-node-id="I88:1534;1495:14442" />
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start" className="min-w-[10rem]">
+            <DropdownMenuItem
+              onSelect={() => setAccountScope("all")}
+              className={accountScope === "all" ? "font-medium" : undefined}
+            >
+              All accounts
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
     </div>
   )
 }
